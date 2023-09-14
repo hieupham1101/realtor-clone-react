@@ -3,8 +3,8 @@ import Home from "./pages/Home";
 import ForgotPassword from "./pages/ForgotPassword";
 import Offers from "./pages/Offers";
 import Profile from "./pages/Profile";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import SignUp from "./pages/SignUp/SignUp";
+import SignIn from "./pages/SignIn/SignIn";
 import Header from "./components/Header";
 
 const App = () => {
@@ -18,7 +18,7 @@ const App = () => {
           <Route path="offers" element={<Offers />} />
           <Route path="profile" element={<Profile />} />
           <Route path="sign-in" element={<SignIn />} />
-          <Route path="sigh-up" element={<SignUp />} />
+          <Route path="sign-up" element={<SignUp />} />
         </Routes>
       </Router>
     </section>
