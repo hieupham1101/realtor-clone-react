@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 const useSignIn = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({

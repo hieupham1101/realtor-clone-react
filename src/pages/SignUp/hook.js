@@ -6,6 +6,8 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { db } from "../../API/firebase";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const useSignUp = (props) => {
   const [formData, setFormData] = useState({
@@ -24,9 +26,9 @@ const useSignUp = (props) => {
       [event.target.id]: event.target.value,
     }));
   };
+
   async function onSubmit(e) {
     e.preventDefault();
-
     try {
       const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(
@@ -35,13 +37,22 @@ const useSignUp = (props) => {
         password
       );
 
-      // updateProfile(auth.currentUser, {
-      //   displayName: name,
-      // });
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
       const user = userCredential.user;
-      console.log(user);
+
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timestamp = serverTimestamp();
+
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+
+      // toast.success("You was register successful");
+
+      // navigate("/");
     } catch (error) {
-      console.log(error);
+      toast.error("Erros register");
     }
   }
   return {
