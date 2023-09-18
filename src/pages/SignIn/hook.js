@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
+
 const useSignIn = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -7,6 +10,7 @@ const useSignIn = (props) => {
     password: "",
   });
   const { email, password } = formData;
+
   const navigate = useNavigate();
   function onChange(e) {
     setFormData((prevState) => ({
@@ -16,6 +20,21 @@ const useSignIn = (props) => {
   }
   async function onSubmit(e) {
     e.preventDefault();
+
+    try {
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (userCredential.user) {
+        navigate("/");
+        toast.success("succesful");
+      }
+    } catch (error) {
+      toast.error("Not sign in");
+    }
   }
 
   return {

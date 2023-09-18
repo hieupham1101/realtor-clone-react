@@ -1,6 +1,7 @@
 import useSignUp from "./hook";
 import { Link } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import AuthO from "../../components/OAuth/OAuth";
 
 const SignUp = ({
   email,
@@ -11,6 +12,7 @@ const SignUp = ({
   setShowPassword,
   navigate,
   name,
+  onGoogle,
 }) => {
   return (
     <section>
@@ -90,13 +92,7 @@ const SignUp = ({
             <div className="flex items-center  my-4 before:border-t before:flex-1 before:border-gray-300 after:border-t after:flex-1 after:border-gray-300">
               <p className="text-center font-semibold mx-4">OR</p>
             </div>
-            <button
-              type="button"
-              className="flex items-center justify-center w-full bg-red-700 text-white px-7 py-3 uppercase text-sm font-medium hover:bg-red-800 active:bg-red-900 shadow-md hover:shadow-lg active:shadow-lg transition duration-150 ease-in-out rounded"
-            >
-              {/* <FcGoogle className="text-2xl  bg-white rounded-full mr-2" /> */}
-              Continue with Google
-            </button>
+            <AuthO />
           </form>
         </div>
       </div>

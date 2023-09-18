@@ -37,9 +37,9 @@ const useSignUp = (props) => {
         password
       );
 
-      updateProfile(auth.currentUser, {
-        displayName: name,
-      });
+      // updateProfile(auth.currentUser, {
+      //   displayName: name,
+      // });
       const user = userCredential.user;
 
       const formDataCopy = { ...formData };
@@ -48,9 +48,8 @@ const useSignUp = (props) => {
 
       await setDoc(doc(db, "users", user.uid), formDataCopy);
 
-      // toast.success("You was register successful");
-
-      // navigate("/");
+      toast.success("You was register successful");
+      navigate("/sign-in");
     } catch (error) {
       toast.error("Erros register");
     }
