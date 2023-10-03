@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import useSignIn from "./hook";
@@ -43,12 +45,12 @@ const SignIn = ({
               />
               {showPassword ? (
                 <AiFillEyeInvisible
-                  className="absolute right-3 top-3 text-xl cursor-pointer"
+                  className="absolute right-3 top-3 text-xl cursor-pointer text-[#4F4746]"
                   onClick={() => setShowPassword((prevState) => !prevState)}
                 />
               ) : (
                 <AiFillEye
-                  className="absolute right-3 top-3 text-xl cursor-pointer"
+                  className="absolute right-3 top-3 text-xl cursor-pointer text-[#4F4746]"
                   onClick={() => setShowPassword((prevState) => !prevState)}
                 />
               )}
