@@ -14,6 +14,7 @@ function Header() {
       return true;
     }
   };
+  console.log(location.pathname, pathMathRoute);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -25,7 +26,7 @@ function Header() {
   }, [auth]);
 
   return (
-    <div className="bg-white border-b shadow-sm sticky top-0">
+    <div className="bg-white border-b shadow-sm sticky top-0 z-50">
       <header className="flex justify-between items-center px-3 max-w-6xl mx-auto z-50">
         <div>
           <img

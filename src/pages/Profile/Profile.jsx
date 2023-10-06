@@ -1,4 +1,7 @@
 import { useProfile } from "./hook";
+import { HomeOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+import { useNavigate } from "react-router";
 
 const Profile = ({
   onChange,
@@ -9,6 +12,7 @@ const Profile = ({
   setChangeDetail,
   name,
 }) => {
+  const navigate = useNavigate();
   return (
     <>
       <section className="max-w-6xl mx-auto flex justify-center items-center flex-col">
@@ -55,6 +59,16 @@ const Profile = ({
                 Sign out{" "}
               </p>
             </div>
+            <Button
+              type="primary"
+              shape="round"
+              icon={<HomeOutlined />}
+              size={"large"}
+              className="w-full mt-8 bg-indigo-600"
+              onClick={() => navigate("/create-list")}
+            >
+              SELL OR RENT YOUR HOME
+            </Button>
           </form>
         </div>
       </section>
