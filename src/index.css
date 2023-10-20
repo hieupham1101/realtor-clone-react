@@ -5,3 +5,35 @@
 body {
   background-color: #ede1e1;
 }
+
+.ant-radio-group-solid
+  :where(
+    .css-dev-only-do-not-override-pr0fja
+  ).ant-radio-button-wrapper-checked:not(
+    .ant-radio-button-wrapper-disabled
+  ):hover {
+  background-color: #a91079 !important;
+  color: #ffff !important;
+}
+.ant-radio-group-solid
+  :where(
+    .css-dev-only-do-not-override-pr0fja
+  ).ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  background-color: #a91079 !important;
+  border: solid 1px;
+}
+
+ant-radio-button-wrapper
+  ant-radio-button-wrapper-checked
+  ant-radio-button-wrapper-in-form-item::before {
+  border: none !important;
+}
+:where(.css-dev-only-do-not-override-pr0fja).ant-radio-button-wrapper:not(
+    :first-child
+  )::before {
+  width: 0;
+  height: 0;
+}
+.ant-radio-button ant-radio-button-checked {
+  background-color: #a91079 !important;
+}

@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuthStatus } from "../pages/hooks/useAuthStatus";
-import { Avatar, List, Skeleton, Switch } from "antd";
+import { Avatar, List, Skeleton } from "antd";
 import { useState } from "react";
 import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
 

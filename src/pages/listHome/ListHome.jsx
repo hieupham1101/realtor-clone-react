@@ -1,188 +1,291 @@
 import useListHome from "./hook";
-import { useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, InputNumber, Radio } from "antd";
-import { useDropzone } from "react-dropzone";
+import { getFilePreview } from "../../helper/file";
+import "../../index.css";
+import ErrorMessage from "../../helper/ErrorMessage";
 
-const ListHome = () => {
-  const [componentSize, setComponentSize] = useState("default");
-  const onFormLayoutChange = ({ size }) => {
-    setComponentSize(size);
-  };
-  const { TextArea } = Input;
-  const { getRootProps, getInputProps } = useDropzone();
-
-  const [formData, setFormData] = useState({
-    type: "rent",
-    name: "abcxyz",
-    bedrooms: 1,
-    bathrooms: 1,
-    parking: false,
-    furnished: false,
-    address: "",
-    description: "",
-    offer: true,
-    regularPrice: 0,
-    discountedPrice: 0,
-    image: "",
-  });
-
-  const {
-    type,
-    name,
-    bedrooms,
-    bathrooms,
-    parking,
-    furnished,
-    address,
-    description,
-    offer,
-    regularPrice,
-    discountedPrice,
-    image,
-  } = formData;
-
-  const onChange = () => {
-    setFormData({ ...formData, offer: !offer });
-  };
-
-  const onSubmit = () => {};
-
+const ListHome = ({
+  getRootProps,
+  getInputProps,
+  onFormLayoutChange,
+  componentSize,
+  TextArea,
+  formik,
+}) => {
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center bg-[#2E0249]">
       <Form
         layout="vertical"
         initialValues={{
           size: componentSize,
         }}
         onValuesChange={onFormLayoutChange}
+        onSubmitCapture={formik.handleSubmit}
         size={componentSize}
         style={{
-          maxWidth: 700,
           marginTop: "30px",
+          backgroundColor: " #EEEEEE",
+          padding: "20px",
         }}
+        className="rounded-lg"
       >
-        <Form.Item label="Sell or Rent">
+        <Form.Item
+          label="Sell or Rent"
+          className="text-gray-900 text-xl not-italic font-medium
+"
+        >
           <Radio.Group
-            defaultValue="a"
             buttonStyle="solid"
             className="space-x-8 flex"
-            value={type}
-            onChange={onChange}
+            value={formik?.values?.type}
+            onChange={formik.handleChange}
+            name="type"
           >
-            <Radio.Button value="rent" className="w-[180px] rounded-lg">
+            <Radio.Button
+              value="rent"
+              name="type"
+              className="w-[180px] rounded-lg hover:!text-white hover:!bg-[#A91079]"
+            >
               Rent
             </Radio.Button>
-            <Radio.Button value="sell" className="w-[180px] rounded-lg">
-              <span className="!border-r-none ">Sell</span>
+            <Radio.Button
+              value="sell"
+              name="type"
+              className="w-[180px] rounded-lg hover:!text-white hover:!bg-[#A91079]"
+            >
+              <span>Sell</span>
             </Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="Name">
+        <Form.Item
+          label="Name"
+          className="text-gray-900 text-xl not-italic font-medium"
+        >
           <Input
             size="medium"
             prefix={<UserOutlined />}
-            value={name}
-            onChange={onChange}
+            value={formik?.values?.name}
+            onChange={formik.handleChange}
+            name="name"
           />
+          <ErrorMessage name="name" formik={formik} />
         </Form.Item>
         <Form.Item>
           <Form.Item
             label="Beds"
-            rules={[{ required: true }]}
+            className="text-gray-900 text-xl not-italic font-medium "
             style={{ display: "inline-block", width: "calc(50% - 8px)" }}
           >
-            <InputNumber value={bedrooms} onChange={onChange} />
+            <div className="flex flex-col	">
+              <InputNumber
+                name="bedrooms"
+                onChange={(value) => formik.setFieldValue("bedrooms", value)}
+                value={formik?.values?.bedrooms}
+              />
+              <div>
+                <ErrorMessage name="bedrooms" formik={formik} />
+              </div>
+            </div>
           </Form.Item>
           <Form.Item
             label="Baths"
-            rules={[{ required: true }]}
+            className="text-gray-900 text-xl not-italic font-medium"
             style={{
               display: "inline-block",
               width: "calc(50% - 8px)",
               margin: "0 8px",
             }}
           >
-            <InputNumber value={bathrooms} onChange={onChange} />
-          </Form.Item>
-          <Form.Item label="Parking spot">
-            <Radio.Group
-              defaultValue="a"
-              buttonStyle="solid"
-              className="space-x-8 flex"
-              value={parking}
-              onChange={onChange}
-            >
-              <Radio.Button value={true} className="w-[180px] rounded-lg">
-                Yes
-              </Radio.Button>
-              <Radio.Button value={false} className="w-[180px] rounded-lg">
-                No
-              </Radio.Button>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item label="Furnished">
-            <Radio.Group
-              defaultValue="a"
-              buttonStyle="solid"
-              className="space-x-8 flex"
-              value={furnished}
-              onChange={onChange}
-            >
-              <Radio.Button value={true} className="w-[180px] rounded-lg">
-                Yes
-              </Radio.Button>
-              <Radio.Button value={false} className="w-[180px] rounded-lg">
-                No
-              </Radio.Button>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item label="Address">
-            <TextArea rows={3} value={address} onChange={onChange} />
-          </Form.Item>
-          <Form.Item label="Description">
-            <TextArea rows={3} value={description} onChange={onChange} />
+            <div className="flex flex-col	">
+              <InputNumber
+                name="bathrooms"
+                value={formik?.values?.bathrooms}
+                onChange={(value) => formik.setFieldValue("bathrooms", value)}
+              />
+              <div>
+                <ErrorMessage name="bathrooms" formik={formik} />
+              </div>
+            </div>
           </Form.Item>
         </Form.Item>
-        <Form.Item label="Offers">
+        <Form.Item
+          label="Parking spot"
+          className="text-gray-900 text-xl not-italic font-medium"
+        >
           <Radio.Group
-            value={offer}
             buttonStyle="solid"
             className="space-x-8 flex"
-            onChange={onChange}
+            name="parking"
+            value={formik?.values?.parking}
+            onChange={formik.handleChange}
           >
-            <Radio.Button value={true} className="w-[180px] rounded-lg">
+            <Radio.Button
+              onChange={formik.handleChange}
+              value={true}
+              name="parking"
+              className="w-[180px] rounded-lg hover:!text-white hover:!bg-[#A91079]"
+            >
               Yes
             </Radio.Button>
-            <Radio.Button value={false} className="w-[180px] rounded-lg">
+            <Radio.Button
+              value={false}
+              name="parking"
+              onChange={formik.handleChange}
+              className="w-[180px] rounded-lg hover:!text-white hover:!bg-[#A91079]"
+            >
               No
             </Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="Regular Price">
-          <InputNumber value={regularPrice} onChange={onChange} />
+        <Form.Item
+          label="Furnished"
+          className="text-gray-900 text-xl not-italic font-medium"
+        >
+          <Radio.Group
+            defaultValue="a"
+            buttonStyle="solid"
+            className="space-x-8 flex"
+            value={formik?.values?.furnished}
+            name="furnished"
+            onChange={formik.handleChange}
+          >
+            <Radio.Button
+              value={true}
+              name="furnished"
+              className="w-[180px] rounded-lg hover:!text-white hover:!bg-[#A91079]"
+            >
+              Yes
+            </Radio.Button>
+            <Radio.Button
+              value={false}
+              className="w-[180px] rounded-lg hover:!text-white hover:!bg-[#A91079]"
+              name="furnished"
+            >
+              No
+            </Radio.Button>
+          </Radio.Group>
         </Form.Item>
-        {offer && (
-          <Form.Item label="Discounted Price">
-            <InputNumber value={discountedPrice} onChange={onChange} />
-          </Form.Item>
-        )}
-        <Form.Item label="Choose file">
-          <div className="border-solid border-2 border-[#e0e0e0] bg-white h-12 content-center cursor-pointer">
-            <div {...getRootProps()}>
-              <input {...getInputProps()} value={image} onChange={onChange} />
-              <p> Select file</p>
-            </div>
+        <Form.Item
+          label="Address"
+          className="text-gray-900 text-xl not-italic font-medium"
+        >
+          <TextArea
+            rows={3}
+            value={formik?.values?.address}
+            name="address"
+            onChange={formik.handleChange}
+          />
+          <ErrorMessage name="address" formik={formik} />
+        </Form.Item>
+
+        <Form.Item
+          label="Description"
+          className="text-gray-900 text-xl not-italic font-medium"
+        >
+          <TextArea
+            rows={3}
+            value={formik?.values?.description}
+            name="description"
+            onChange={formik.handleChange}
+          />
+          <ErrorMessage name="description" formik={formik} />
+        </Form.Item>
+        <Form.Item
+          label="Offers"
+          className="text-gray-900 text-xl not-italic font-medium"
+        >
+          <Radio.Group
+            name="offer"
+            value={formik?.values?.offer}
+            buttonStyle="solid"
+            className="space-x-8 flex"
+          >
+            <Radio.Button
+              value={true}
+              onChange={formik.handleChange}
+              className="w-[180px] rounded-lg"
+              name="offer"
+            >
+              Yes
+            </Radio.Button>
+            <Radio.Button
+              value={false}
+              onChange={formik.handleChange}
+              className="w-[180px] rounded-lg"
+              name="offer"
+            >
+              No
+            </Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item
+          label="Regular Price"
+          className="text-gray-900 text-xl not-italic font-medium"
+        >
+          <div className="flex flex-col">
+            <InputNumber
+              value={formik?.values?.regularPrice}
+              onChange={(value) => formik.setFieldValue("regularPrice", value)}
+              name="regularPrice"
+            />
+            <ErrorMessage name="regularPrice" formik={formik} />
           </div>
         </Form.Item>
-        <Form.Item>
-          <Button
-            className="w-full bg-[#1677ff] text-white hover:text-white"
-            onSubmit={onSubmit}
+        {formik?.values?.offer && (
+          <Form.Item
+            label="Discounted Price"
+            className="text-gray-900 text-xl not-italic font-medium"
           >
-            Create Submit
-          </Button>
+            <div className="flex flex-col"></div>
+            <InputNumber
+              value={formik?.values?.discountedPrice}
+              onChange={(value) =>
+                formik.setFieldValue("discountedPrice", value)
+              }
+              name="discountedPrice"
+            />
+            <ErrorMessage name="discountedPrice" formik={formik} />
+          </Form.Item>
+        )}
+        <Form.Item
+          label="Choose file"
+          className="mb-[50px] text-gray-900 text-xl not-italic font-medium"
+        >
+          <div
+            {...getRootProps({
+              className:
+                " min-h-[100px] max-w-100px] bg-[#fafafa] border-dashed border-[#eeeeee] border-[1px] flex flex-col items-center justify-center rounded-sm mt-1",
+            })}
+          >
+            <input {...getInputProps()} />
+            {formik?.values?.image ? (
+              <img
+                src={getFilePreview(formik?.values?.image) || ""}
+                width={100}
+                height={100}
+                className="rounded-sm"
+                alt="house_image"
+              />
+            ) : (
+              <>
+                <img
+                  src="src\assets\image\paper-upload.svg"
+                  alt="Picture of the author"
+                />
+                <p> Kéo thả hình ảnh hoặc chọn file để tải lên</p>
+              </>
+            )}
+          </div>
+          <ErrorMessage name="image" formik={formik} />
         </Form.Item>
+        <Button
+          htmlType="submit"
+          loading={formik.isSubmitting}
+          className="w-full bg-[#A91079] text-white hover:!text-white"
+        >
+          Create Submit
+        </Button>
       </Form>
     </div>
   );

@@ -2,6 +2,7 @@ import { useProfile } from "./hook";
 import { HomeOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useNavigate } from "react-router";
+import HomeCardLayout from "../housesCard/page";
 
 const Profile = ({
   onChange,
@@ -70,6 +71,9 @@ const Profile = ({
               SELL OR RENT YOUR HOME
             </Button>
           </form>
+        </div>
+        <div>
+          <HomeCardLayout />
         </div>
       </section>
     </>
